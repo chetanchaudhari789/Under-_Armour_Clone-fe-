@@ -1,0 +1,130 @@
+@font-face {
+  font-family: "NeuePlak";
+  src: local("UA-Regular"), url(/fonts/NeuePlakRegular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NeuePlak";
+  src: local("UA-Semi-Bold"), url(/fonts/NeuePlakTextSemiBold.ttf);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1.2rem !important;
+}
+@font-face {
+  font-family: "NeuePlak";
+  src: local("UA-Bold"), url(/fonts/NeuePlakTextBlack.ttf);
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NeuePlak";
+  src: local("UA-Cn-Blck"),
+    url(/fonts/NeuePlakExtendedXBlack.woff) format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+:root {
+  --font-base: "NeuePlak", "Sans-serif";
+  --ua-regular-black: #1d1d1d;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-base), sans-serif;
+}
+
+body,
+html {
+  font: 1rem/1.4285714286 var(--font-base);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body.not-scrollable {
+  overflow: hidden;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  all: unset;
+}
+
+.fs-sm {
+  font-size: var(--fn-size-sm);
+}
+
+.xs-mb-show {
+  display: none;
+}
+
+#mobile-product-carousel {
+  background-color: red;
+}
+
+.swiper {
+  width: 100%;
+}
+
+@media all and (min-width: 734px) {
+  .xs-mb-hide {
+    display: none !important;
+  }
+}
+
+@media all and (min-width: 735px) {
+  .xs-mb-show {
+    display: block !important;
+  }
+}
+
+@media all and (max-width: 767px) {
+  .mb-hide {
+    display: none;
+  }
+}
+
+@media all and (min-width: 768px) {
+  .dt-hide {
+    display: none;
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .sm-dt-hide {
+    display: none !important;
+  }
+}
+
+@media all and (max-width: 1023px) {
+  .sm-dt-show {
+    display: none !important;
+  }
+}
+
+@media all and (max-width: 1023px) {
+  [type="modal"] {
+    display: none !important;
+  }
+}
