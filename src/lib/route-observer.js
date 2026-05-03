@@ -1,22 +1,36 @@
-import { useLoadingContext } from "@/context/loading.context";
-import { useRouter } from "next/router";
+"use client";
+import { useLoadingStore } from "@/zustand/useLoadingStore";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 const RouteObserver = () => {
-  const router = useRouter();
-  const { setIsLoading } = useLoadingContext();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { setIsLoading } = useLoadingStore();
 
   useEffect(() => {
-    if (!router.isReady) return;
-    router.events.on("routeChangeStart", () => {
-      setIsLoading(true);
-    });
-    router.events.on("routeChangeComplete", () => {
-      setIsLoading(false);
-    });
-  }, []);
+    const handleAnchorClick = (event) => {
+      const target = event.target.closest("a");
 
-  return <></>;
+      if (target && target.href && !target.target) {
+        const targetUrl = new URL(target.href);
+        const currentUrl = new URL(window.location.href);
+
+        if (targetUrl.pathname !== currentUrl.pathname) {
+          setIsLoading(true);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+    return () => document.removeEventListener("click", handleAnchorClick);
+  }, [setIsLoading]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [pathname, searchParams, setIsLoading]);
+
+  return null;
 };
 
 export default RouteObserver;

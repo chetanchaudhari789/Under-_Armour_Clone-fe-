@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @font-face {
   font-family: "NeuePlak";
   src: local("UA-Regular"), url(/fonts/NeuePlakRegular.ttf);

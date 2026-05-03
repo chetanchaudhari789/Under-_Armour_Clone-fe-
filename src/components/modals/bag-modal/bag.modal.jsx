@@ -1,18 +1,17 @@
 import BackShadow from "../../back-shadow/back-shadow.component";
 import Divider from "../../divider/divider.component";
 import css from "./bag.styles.module.css";
-import { useContext } from "react";
 import ConfirmActionModal from "../confirm-action/confirm-action.modal";
 import { useState } from "react";
-import { BagContext, useBagCtx } from "@/context/bag.context";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useBagStore } from "@/zustand/useBagStore";
 
 const BagModalComp = () => {
   const {
-    bagContext: { bag, totalItems, subTotal },
+     bag, totalItems, subTotal,
     removeItemFromBag,
-  } = useContext(BagContext);
+  } = useBagStore();
 
   const [confirmActionRenderDetails, setConfirmActionRenderDetails] = useState({
     actionItem: undefined,
@@ -127,17 +126,18 @@ const BagModalComp = () => {
 };
 
 const BagModal = () => {
-  const { bagContext } = useBagCtx();
+  const { bag,
+      totalItems } = useBagStore();
   return (
     <>
-      {bagContext.totalItems ? (
+      {totalItems ? (
         <>
           <BackShadow
             trigger={"bag-modal"}
             className={css["back-shadow"]}
             closeOnBackgroundHover={true}
           >
-            <BagModalComp bag={bagContext.bag} />
+            <BagModalComp bag={bag} />
           </BackShadow>
         </>
       ) : null}

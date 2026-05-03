@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import css from "./warning.styles.module.css";
 

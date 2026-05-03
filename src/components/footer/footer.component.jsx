@@ -1,3 +1,4 @@
+"use client";
 import { Variant2 } from "../button/action-button/action-button.component";
 import css from "./footer.styles.module.css";
 import { AiOutlineInstagram } from "react-icons/ai";

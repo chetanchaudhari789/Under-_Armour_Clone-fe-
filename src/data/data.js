@@ -52,7 +52,7 @@ export const VARIANT_4_DATA = [
       colorCount: "3 Colors",
       itemName: "Unisex UA SlipSpeed™ Mesh Training Shoes",
       price: "$150.00",
-      href : "p/shoes/training/10003?c=1"
+      href : "product/shoes/training/10003?c=1"
     },
     {
       img: "imgs/10003/white/low-qt-1.webp",
@@ -61,7 +61,7 @@ export const VARIANT_4_DATA = [
       colorCount: "3 Colors",
       itemName: "Unisex UA SlipSpeed™ Mesh Training Shoes",
       price: "$150.00",
-      href : "p/shoes/training/10003?c=0"
+      href : "product/shoes/training/10003?c=0"
     },
     {
       img: "imgs/index/3027726-103_DEFAULT.webp",
@@ -70,7 +70,7 @@ export const VARIANT_4_DATA = [
       colorCount: "3 Colors",
       itemName: "Unisex UA SlipSpeed™ Mesh Training Shoes",
       price: "$150.00",
-      href : "p/shoes/training/10003",
+      href : "product/shoes/training/10003",
     },
     {
       img: "imgs/index/3027726-300_DEFAULT.webp",
@@ -79,7 +79,7 @@ export const VARIANT_4_DATA = [
       colorCount: "3 Colors",
       itemName: "Unisex UA SlipSpeed™ Mesh Training Shoes",
       price: "$150.00",
-      href : "p/shoes/training/10003",
+      href : "product/shoes/training/10003",
     },
   ],
 ];

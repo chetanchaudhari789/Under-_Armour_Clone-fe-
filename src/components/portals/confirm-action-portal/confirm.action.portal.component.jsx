@@ -1,4 +1,4 @@
-import { createIfDoesNotExist } from "@/helper/helper";
+import { createIfDoesNotExist } from "@/shared/utils/helper/helper";
 import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 

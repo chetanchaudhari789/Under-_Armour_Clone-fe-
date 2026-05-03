@@ -1,3 +1,4 @@
+"use client"
 import { forwardRef, useEffect, useRef, useState } from "react";
 
 const withExtendable = (Comp, hocProps) => {

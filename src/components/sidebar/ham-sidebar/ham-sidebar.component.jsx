@@ -1,5 +1,5 @@
+"use client"
 import SubCategoryMobileComponent from "./subCategory.component";
-import { SideBarContext } from "../../../context/sideBar.context";
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
 import { useContext, useRef, useState } from "react";
 import { PiHeart, PiInfoThin } from "react-icons/pi";
@@ -7,15 +7,16 @@ import css from "./ham-sidebar.styles.module.css";
 import { CiUser, CiMail } from "react-icons/ci";
 import { subCats } from "../../../data/data";
 import Link from "next/link";
+import { useSideBarStore } from "@/zustand/useSideBarStore";
 
 const HamSideBar = () => {
   const [cat, setCat] = useState("");
   const {
     isHamSideOpen,
-    setIsHamSideBarOpen,
+    setIsHamSideOpen,
     isSubCategoriesHidden,
     setIsSubCategoriesHidden,
-  } = useContext(SideBarContext);
+  } = useSideBarStore();
 
   const midRef = useRef();
   const backArrowRef = useRef();
@@ -38,7 +39,7 @@ const HamSideBar = () => {
   };
 
   const handleModuleClose = () => {
-    setIsHamSideBarOpen((prev) => !prev);
+    setIsHamSideOpen(!isHamSideOpen);
   };
 
   const getModuleStyle = () =>

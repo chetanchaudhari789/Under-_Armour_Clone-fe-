@@ -1,11 +1,10 @@
+"use client"
 import XButtonComponent from "../button/x-button/x-button.component";
 import React, { useContext, useEffect, useRef } from "react";
 import TopPromo from "../promo/top-promo/top-promo.component";
-import { SideBarContext } from "../../context/sideBar.context";
 import BagModal from "../modals/bag-modal/bag.modal";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import Divider from "../divider/divider.component";
-import { NavContext } from "@/context/nav.context";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiSolidDownArrow } from "react-icons/bi";
@@ -15,20 +14,23 @@ import { PiHeart } from "react-icons/pi";
 import { CiUser } from "react-icons/ci";
 import Logo from "../logo/logo";
 import Link from "next/link";
-import { useBagCtx } from "@/context/bag.context";
-import { calculateTotalItems } from "@/helper/helper";
+import { calculateTotalItems } from "@/shared/utils/helper/helper";
+import { useBagStore } from "@/zustand/useBagStore";
+import { useSideBarStore } from "@/zustand/useSideBarStore";
+import { useNavBarStore } from "@/zustand/useNavBarStore";
+import { useAuthStore } from "@/zustand/useAuthStore";
 
 const Navbar = () => {
   const {
-    setIsHamSideBarOpen,
+    setIsHamSideOpen,
     setIsSearchSideBarOpen,
     isSearchSideBarOpen,
     setSearchTerm,
-  } = useContext(SideBarContext);
+  } = useSideBarStore();
 
-  const { catHovered, setCatHovered } = useContext(NavContext);
-
-  const handleOpenHamSideBar = () => setIsHamSideBarOpen((prev) => !prev);
+  const { catHovered, setCatHovered } = useNavBarStore();
+  const { openLogin } = useAuthStore();
+  const handleOpenHamSideBar = () => setIsHamSideOpen(true);
   const handleOpenSearchSideBar = () => setIsSearchSideBarOpen(true);
   const handleCloseSearchSideBar = () => setIsSearchSideBarOpen(false);
 
@@ -47,6 +49,7 @@ const Navbar = () => {
       <MobileNav
         handleOpenHamSideBar={handleOpenHamSideBar}
         handleOpenSearchSideBar={handleOpenSearchSideBar}
+        openLogin = {openLogin}
       />
       <Divider
         className={"mb-hide"}
@@ -57,7 +60,7 @@ const Navbar = () => {
   );
 };
 
-const MobileNav = ({ handleOpenHamSideBar, handleOpenSearchSideBar }) => {
+const MobileNav = ({ handleOpenHamSideBar, handleOpenSearchSideBar,openLogin }) => {
   return (
     <nav className={css["mobile-nav"]}>
       <div className={css["nav"]}>
@@ -69,7 +72,7 @@ const MobileNav = ({ handleOpenHamSideBar, handleOpenSearchSideBar }) => {
             />
           </button>
           <button className={css["nav-button"]}>
-            <CiUser />
+            <CiUser onClick={openLogin} />
           </button>
         </div>
         <div className={css["nav-brand"]}>
@@ -99,9 +102,7 @@ const MobileNav = ({ handleOpenHamSideBar, handleOpenSearchSideBar }) => {
 };
 
 const ShoppingCart = () => {
-  const {
-    bagContext: { bag },
-  } = useBagCtx();
+const { bag } = useBagStore();
   return (
     <button className={`${css["nav-button"]} ${css["shopping-bag"]}`}>
       {bag.length ? (
@@ -159,7 +160,7 @@ const Cat = ({ data, setCatHovered }) => {
 
   return (
     <li cat-id={data.replaceAll(" ", "").toLowerCase()} ref={ref}>
-      <Link href={`/c/mens`}>
+      <Link href={`/category/mens`}>
         <span>{data}</span>
       </Link>
     </li>

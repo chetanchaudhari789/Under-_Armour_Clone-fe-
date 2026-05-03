@@ -1,13 +1,15 @@
+"use client"
 import { useContext, useEffect, useRef, useState } from "react";
-import { SideBarContext } from "../../../context/sideBar.context";
 import Divider from "../../divider/divider.component";
 import css from "./search-sidebar.styles.module.css";
 import Logo from "../../logo/logo";
 import XButtonComponent from "../../button/x-button/x-button.component";
 import { AiOutlineSearch } from "react-icons/ai";
 import BackShadow from "../../back-shadow/back-shadow.component";
-import useNextImageOnHover from "../../../hooks/useNextImageOnHover.hook";
-import { makeBodyNotScrollable, makeBodyScrollable } from "@/helper/helper";
+import { makeBodyNotScrollable, makeBodyScrollable } from "@/shared/utils/helper/helper";
+import useNextImageOnHover from "@/shared/hooks/useNextImageOnHover.hook";
+import { useSideBarStore } from "@/zustand/useSideBarStore";
+import { SEARCH_DATA } from "@/server-data/server-data";
 
 const SearchSideBar = () => {
   const {
@@ -15,8 +17,7 @@ const SearchSideBar = () => {
     setIsSearchSideBarOpen,
     searchTerm,
     setSearchTerm,
-    SEARCH_DATA,
-  } = useContext(SideBarContext);
+  } = useSideBarStore();
 
   const [matchedItems, setMatchedItems] = useState([]);
 

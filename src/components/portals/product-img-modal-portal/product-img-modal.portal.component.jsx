@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import css from "./product-img-modal.styles.module.css";
-import { createIfDoesNotExist } from "@/helper/helper";
+import { createIfDoesNotExist } from "@/shared/utils/helper/helper";
 import dynamic from "next/dynamic";
 
 const ImgPortal = ({ children }) => {

@@ -1,8 +1,9 @@
+"use client"
 import BackShadow from "../../back-shadow/back-shadow.component";
-import { NavContext } from "../../../context/nav.context";
 import css from "./cat-nav.styles.module.css";
-import { useContext } from "react";
 import dynamic from "next/dynamic";
+import { useNavBarStore } from "@/zustand/useNavBarStore";
+import { MENU_DATA } from "@/data/data";
 
 const CatNavHoverMenu = ({ MENU_DATA, catHovered }) => {
   return (
@@ -51,7 +52,7 @@ const CatNavHoverMenu = ({ MENU_DATA, catHovered }) => {
 };
 
 const CatNavModal = () => {
-  const { MENU_DATA, catHovered } = useContext(NavContext);
+  const { catHovered } = useNavBarStore();
   return (
     <BackShadow
       trigger={"cat-nav-modal"}

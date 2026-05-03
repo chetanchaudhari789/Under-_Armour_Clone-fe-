@@ -1,12 +1,12 @@
 import ConfirmActionPortal from "../../portals/confirm-action-portal/confirm.action.portal.component";
-import ProductRecommended from "../../product/product-recommended/product-recommended.component";
+import ProductRecommended from "../../../imports/product/ui/componets/product-recommended/product-recommended.component";
 import BackShadow from "../../back-shadow/back-shadow.component";
 import css from "./added-to-bag.styles.module.css";
 import {
   Variant1,
   Variant2,
 } from "../../button/action-button/action-button.component";
-import { greaterThanOne } from "../../../helper/helper";
+import { greaterThanOne } from "../../../shared/utils/helper/helper";
 import Divider from "../../divider/divider.component";
 import Link from "next/link";
 
