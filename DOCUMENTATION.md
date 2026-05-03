@@ -1,82 +1,138 @@
-# Under Armour Clone Frontend - Project Documentation
+# Under Armour Clone - Detailed Project Documentation
 
-## 1. Overview
-The "next-ua-clone" is a fully-featured e-commerce frontend web application built as an Under Armour clone. It leverages Next.js (React) to provide server-side rendering (SSR), static site generation (SSG), and seamless client-side routing.
+This document provides a comprehensive, file-by-file and directory-by-directory breakdown of the **Under Armour Clone** frontend application.
 
-## 2. Tech Stack
-- **Framework:** Next.js 14 (App Router & Pages Router architecture)
+---
+
+## 1. Project Overview & Architecture
+
+**Project Name:** `next-ua-clone`
+**Description:** A fully-featured e-commerce frontend clone of the Under Armour web experience.
+**Tech Stack:**
+- **Framework:** Next.js 14.0.3 (Hybrid architecture: App Router & Pages Router)
 - **Library:** React 18
-- **State Management:** Zustand
-- **Styling:** CSS Modules, Tailwind CSS, PostCSS, and Autoprefixer
-- **Data Fetching:** Axios, React Query (`@tanstack/react-query`)
-- **UI Components:** React Icons, React Loader Spinner, Swiper, React Star Ratings, React Hot Toast
-- **Utilities:** date-fns, js-cookie
+- **State Management:** Zustand 5.0.12 (Migrated from legacy Context API)
+- **Styling:** CSS Modules, Tailwind CSS 3.4, PostCSS
+- **Data Fetching:** Axios, `@tanstack/react-query` (v5)
+- **UI & Components:** React Icons, React Loader Spinner, Swiper, React Star Ratings, React Hot Toast
+- **Utilities:** `date-fns` for time formatting, `js-cookie` for cookie management.
 
-## 3. Project Structure
+The architecture employs a **Feature-Sliced Design (FSD)** variation, primarily seen in the `src/imports` and `src/components` directories, encapsulating styles, UI, and logic by domain (e.g., auth, product, cart).
 
-The source code is primarily housed within the `src/` directory.
+---
 
-### `src/app/`
-The Next.js 14 App Router directory containing layout and routing structure.
-- `layout.js`, `page.js`: Root layout and home page structure.
-- `not-found.js`: Global 404 handler.
-- `ReactQueryProvider.js`: Wrapper for setting up TanStack Query Client.
-- Features folders like `cart/`, `category/`, and `product/` mapping to specific routes.
+## 2. Directory Structure Deep-Dive
 
-### `src/pages/`
-The legacy Pages Router, primarily containing API routes and specialized routes (`_app.js`, `_document.js`, `404.jsx`).
+### Root Directory (`/`)
+- **Configuration Files:**
+  - `package.json` / `package-lock.json` / `pnpm-lock.yaml`: Dependency declarations and build scripts (`dev`, `build`, `start`, `lint`, `sandbox`).
+  - `next.config.js`: Next.js core configurations, API routing rewrites, and image domain setups.
+  - `tailwind.config.js` & `postcss.config.js`: Configuration for Tailwind utilities and PostCSS plugins (Autoprefixer).
+  - `.eslintrc.json`: ESLint configuration extending `next/core-web-vitals`.
+  - `jsconfig.json`: Path resolution configuration (enabling absolute imports).
+- **Documentation:**
+  - `README.md`: Basic introduction and startup instructions.
+  - `DOCUMENTATION.md`: This comprehensive file.
 
-### `src/components/`
-Reusable UI components used across multiple pages and views:
-- `button/`: Various button types (Action, X-Button, Slider).
-- `modals/`: Global modals (Bag, Nav, Auth, Loading, Confirm Action).
-- `navbar/` & `sidebar/`: Navigation and sidebar components.
-- `product/`: Common product components (cards, recommended).
-- `portals/`: React portals for overlay rendering.
+### Public Assets (`/public`)
+Static assets served directly at the root URL.
+- **`/fonts`**: Contains the custom `NeuePlak` font family (`Bold`, `Regular`, `ExtendedXBlack`, etc.) critical to the Under Armour brand aesthetic.
+- **`/imgs`**: E-commerce assets.
+  - SVG logos for payment providers (`visa`, `paypal`, `mastercard`, `klarna`).
+  - Brand SVGs (`menulogo`, `underarmourfooterlogo`).
+  - Product image folders (e.g., `10001/`, `10002/`, `10003/`) and `index/` containing `.webp` and `.jpg` imagery.
+- **`/videos`**: Promotional and product teaser videos (e.g., `10001/dt-teaser-video.mp4`).
 
-### `src/imports/`
-This folder follows a feature-sliced design, encapsulating UI components, hooks, and logic specific to primary domains:
-- `auth/`: Authentication UI and logic (Login, Signup modals).
-- `cart/`: Cart page features and UI elements.
-- `category/`: Category listing views and styling.
-- `home/`: Home page variants and structural components.
-- `product/`: Product detail page components (carousel, teasers, specs, reviews).
+---
 
-### `src/shared/`
-Shared utilities, contexts, hooks, and global layouts.
-- `context/`: Legacy React context implementations.
-- `hooks/`: Custom React hooks (`useImageSlider`, `usePagination`, `usePopUpEffect`).
-- `utils/`: Helpers and API request functions.
+## 3. Source Code (`/src`)
 
-### `src/zustand/`
-Global state management stores:
-- `useAuthStore.js`: Authentication state.
-- `useBagStore.js`: Shopping cart / bag state.
-- `useCoreStore.js`: Core app-level state.
-- `useLoadingStore.js`: Global loading indicator state.
-- `useNavBarStore.js`: Navbar hovering and sub-menu state.
-- `useProductStore.js`: Product-related data.
-- `useSideBarStore.js`: Sidebar visibility state.
+The `/src` folder contains all application logic, components, and routing.
 
-### `public/`
-Static assets, including extensive images structured by product ID, fonts (`NeuePlak`), and SVG icons.
+### 3.1 Next.js App Router (`src/app`)
+The modern Next.js 14 routing paradigm.
+- **`layout.js`**: The Root Layout wrapping the entire application. Initializes global font styles, providers, and HTML structure.
+- **`page.js`**: The index/home page component rendered at `/`.
+- **`not-found.js`**: Global 404 fallback page for the App Router.
+- **`ReactQueryProvider.js`**: A client-side wrapper to instantiate and provide the TanStack `QueryClient` to the component tree.
+- **Feature Routes**:
+  - `cart/`: Shopping cart page and checkout flow layout.
+  - `category/`: Category listing pages (e.g., Men, Women, Shoes).
+  - `product/`: Product detail pages (PDP) mapped to specific product IDs.
 
-## 4. State Management (Zustand Migration)
-The project utilizes Zustand for streamlined, hook-based global state. This removes the boilerplate associated with React Context providers and improves render performance. Stores map out explicit domains, such as bag functionality (`useBagStore`), authentication (`useAuthStore`), and UI layout state (`useSideBarStore`).
+### 3.2 Next.js Pages Router (`src/pages`)
+Legacy Next.js routing, coexisting with the App Router.
+- **`_app.js`**: Custom app wrapper for Pages Router (legacy layouts and global CSS imports).
+- **`_document.js`**: Custom document structure for injecting fonts and meta tags.
+- **`404.jsx`**: Custom 404 error page.
+- **`index.jsx`**: Potential legacy entry point (often superseded by App Router if conflicts are resolved).
+- **`api/`**: Backend-for-Frontend (BFF) API routes for proxying requests or handling server-side logic securely.
+- **Dynamic Routes**:
+  - `c/` (Categories).
+  - `cart/`.
+  - `p/` (Products).
 
-## 5. Styling Architecture
-Styling is managed via a hybrid approach:
-- **CSS Modules:** Each component typically has a corresponding `.module.css` file to guarantee scoped styling and prevent class collisions.
-- **Tailwind CSS:** Integrated for rapid utility-class application and overall layout scaffolding (configured via `tailwind.config.js` and `postcss.config.js`).
-- **Global CSS:** `src/styles/globals.css` introduces the base Tailwind directives and sets up custom fonts (`NeuePlak`).
+### 3.3 Reusable Components (`src/components`)
+Dumb/Presentational components and global UI elements.
+- **`404/`**: UI specific to the "Not Found" page.
+- **`button/`**: Reusable button variants (primary action, close/X, sliders).
+- **`modals/`**: Portaled UI overlays. Includes `Bag` (mini-cart), `Nav` (mobile navigation), `Auth` (login/register).
+- **`navbar/` & `sidebar/`**: Global site navigation elements, responsive headers, and category sidebars.
+- **`product/`**: Reusable product cards used in grids and recommendation carousels.
+- **`portals/`**: Utilities for mounting components outside the standard DOM hierarchy (e.g., for modals).
+- **`svgs/`**: Reusable raw SVG components.
 
-## 6. Scripts & Commands
-- `npm run dev`: Starts the Next.js development server.
-- `npm run build`: Compiles and builds the Next.js application for production.
-- `npm run start`: Starts a Next.js production server.
-- `npm run lint`: Runs ESLint to catch syntax and styling issues.
+### 3.4 Feature Domains (`src/imports`)
+Encapsulated domain logic and complex UI compositions.
+- **`auth/`**: Registration forms, login flows, and authentication state hooks.
+- **`cart/`**: Order summary, cart item listings, promo code inputs, and checkout logic.
+- **`category/`**: Filtering logic, product grids, and sorting mechanisms for category views.
+- **`home/`**: Hero banners, promotional teasers, and curated product carousels for the landing page.
+- **`product/`**: Product Detail Page (PDP) specific components: image galleries, size selectors, spec accordions, and customer reviews.
 
-## 7. Recent Architectural Changes
-- Overhauled Next.js structure merging both App Router and Pages Router functionality.
-- Transitioned global state from Context API into Zustand stores for performance and simplicity.
-- Implemented Tailwind CSS alongside PostCSS to augment CSS modules.
+### 3.5 Global State Management (`src/zustand`)
+Zustand stores driving global interactivity without prop-drilling or Context re-render issues.
+- **`useAuthStore.js`**: Manages user session, token storage, and authentication status.
+- **`useBagStore.js`**: Manages cart items, quantities, subtotal calculations, and mini-cart visibility.
+- **`useCoreStore.js`**: High-level application state (e.g., user preferences).
+- **`useLoadingStore.js`**: Controls global loading overlays and spinners.
+- **`useNavBarStore.js`**: Handles complex dropdown states, hover intents, and active menus.
+- **`useProductStore.js`**: Caches and manages the active product being viewed.
+- **`useSideBarStore.js`**: Toggles the mobile/category sidebar state.
+
+### 3.6 Legacy Contexts (`src/context` & `src/shared/context`)
+*Note: Being actively migrated to Zustand.* Contains legacy React Context providers (e.g., `bag.context.jsx`, `nav.context.jsx`). These are retained for backwards compatibility with older components not yet refactored.
+
+### 3.7 Custom Hooks (`src/hooks` & `src/shared/hooks`)
+- **`useImageSlider.hook.js`**: Logic for swipeable/draggable image carousels.
+- **`usePagination.hook.jsx`**: Handles pagination logic for reviews and product grids.
+- **`usePopUpEffect.hook.js`**: Manages scroll locking and focus trapping for modals.
+- **`useIsSSRSkipped.hook.js`**: Utility to avoid hydration mismatches by ensuring client-side rendering for specific dynamic components.
+
+### 3.8 Utilities & Lib (`src/lib`, `src/helper`, `src/utils`)
+- **`route-observer.js`**: Tracks route changes for analytics or navigation history.
+- **`server-helpers.js`**: Utilities utilized specifically inside server components or `getServerSideProps`.
+- **`helper.js` & `data.js`**: Static data dictionaries and pure functions for data transformation (e.g., currency formatting).
+
+### 3.9 Styles (`src/styles`)
+- **`globals.css`**: The core stylesheet importing Tailwind bases, components, and utilities. It also defines custom font-face declarations (NeuePlak) and base CSS variables.
+
+---
+
+## 4. Development & Contribution Guidelines
+
+### State Management
+- Prefer **Zustand** (`src/zustand`) for all new global state. Avoid adding to the legacy Contexts.
+- Keep stores atomic and focused on single domains.
+
+### Styling
+- Use **Tailwind CSS** for layout, spacing, and typography to maintain consistency.
+- Use **CSS Modules** (`[name].module.css`) for complex, component-specific animations or legacy styles that don't map cleanly to Tailwind utilities.
+
+### Component Architecture
+- Place purely presentational components in `src/components`.
+- Place domain-specific, logic-heavy components in `src/imports/[domain]`.
+- Ensure all new API requests utilize `@tanstack/react-query` for robust caching and loading states.
+
+---
+*Documentation Generated automatically on branch `feature/comprehensive-docs`.*
